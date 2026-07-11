@@ -704,7 +704,7 @@ h3 {
   align-items: end;
   justify-content: space-between;
   gap: 30px;
-  padding: 60px 0 42px;
+  padding: 10px 0 32px;
 }
 .rich-hero h1 {
   max-width: 610px;
@@ -1496,5 +1496,135 @@ h3 {
   }
   .filter-controls-group input {
     width: 100%;
+  }
+}
+
+/* Sidebar Dashboard Layout */
+.rich-dashboard-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-right: 1px solid var(--line);
+  padding: 32px 16px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  box-sizing: border-box;
+}
+
+.sidebar-brand {
+  margin-bottom: 32px;
+  padding: 0 8px;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sidebar-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.8px;
+  margin: 0 0 12px 8px;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--body);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.sidebar-link:hover {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.sidebar-link.active {
+  background: var(--blue);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.sidebar-icon {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.arrow-indicator {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.back-home-btn {
+  color: var(--body);
+}
+
+.back-home-btn:hover {
+  background: rgba(207, 45, 86, 0.08);
+  color: #cf2d56;
+}
+
+.rich-dashboard-content {
+  padding: 40px 48px;
+  overflow-y: auto;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .rich-dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-nav {
+    height: auto;
+    position: relative;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 18px 24px;
+  }
+  .rich-dashboard-content {
+    height: auto;
+    padding: 24px 18px;
+  }
+  .sidebar-footer {
+    display: none;
   }
 }

@@ -66,6 +66,83 @@ function Brand() {
   );
 }
 
+const tabIcon = (tab) => {
+  switch (tab) {
+    case "Overview":
+      return (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="sidebar-icon"
+        >
+          <rect x="3" y="3" width="7" height="9"></rect>
+          <rect x="14" y="3" width="7" height="5"></rect>
+          <rect x="14" y="12" width="7" height="9"></rect>
+          <rect x="3" y="16" width="7" height="5"></rect>
+        </svg>
+      );
+    case "Cases":
+      return (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="sidebar-icon"
+        >
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
+      );
+    case "Analytics":
+      return (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="sidebar-icon"
+        >
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+      );
+    case "Settings":
+      return (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="sidebar-icon"
+        >
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
+
 function scoreCase(
   age,
   priority,
@@ -227,774 +304,807 @@ function Dashboard({ onHome }) {
   };
 
   return (
-    <main className="rich-dashboard">
-      <header className="rich-nav">
-        <button className="brand-button" onClick={onHome}>
+    <div className="rich-dashboard-layout">
+      {/* Sidebar Nav */}
+      <aside className="sidebar-nav">
+        <div className="sidebar-brand">
           <Brand />
-        </button>
-        <div className="rich-nav-links">
-          {["Overview", "Cases", "Analytics", "Settings"].map((tab) => (
-            <span
-              key={tab}
-              className={activeTab === tab ? "selected" : ""}
-              onClick={() => setActiveTab(tab)}
-              style={{ cursor: "pointer" }}
-            >
-              {tab}
-            </span>
-          ))}
         </div>
-        <button className="back-link" onClick={onHome}>
-          ← Home
-        </button>
-      </header>
-
-      {/* Stats Cards Section */}
-      <section className="rich-stats">
-        <article>
-          <span>Open cases</span>
-          <strong>{totalCount}</strong>
-          <small>Across all service queues</small>
-        </article>
-        <article>
-          <span>At-risk cases</span>
-          <strong>{atRiskCount}</strong>
-          <small>Need attention today</small>
-        </article>
-        <article>
-          <span>Critical risk</span>
-          <strong>{criticalCount}</strong>
-          <small>Likely to breach soon</small>
-        </article>
-        <article>
-          <span>SLA Health Index</span>
-          <strong>{slaHealthIndex}%</strong>
-          <small>Cases within safe bounds</small>
-        </article>
-      </section>
-
-      {/* OVERVIEW TAB */}
-      {activeTab === "Overview" && (
-        <section className="rich-grid">
-          {/* Simulator Panel */}
-          <div className="rich-panel simulator">
-            <div className="rich-panel-title">
-              <div>
-                <p className="eyebrow">Risk simulator</p>
-                <h2>Predict a case</h2>
-              </div>
-              <span
-                className={`prediction-pill ${prediction.label.toLowerCase()}-pill`}
-              >
-                {prediction.label} risk ({prediction.score}%)
-              </span>
-            </div>
-
-            <div className="risk-meter">
-              <div
-                className={`risk-meter-bar ${prediction.label.toLowerCase()}`}
-                style={{ width: `${prediction.score}%` }}
-              />
-            </div>
-
-            <div className="risk-inputs">
-              <label>
-                Customer Name
-                <input
-                  type="text"
-                  placeholder="e.g. Acme Corp"
-                  value={form.customerName || ""}
-                  onChange={(e) =>
-                    setForm({ ...form, customerName: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                SLA Target Service
-                <input
-                  type="text"
-                  placeholder="e.g. Incident response"
-                  value={form.serviceName || ""}
-                  onChange={(e) =>
-                    setForm({ ...form, serviceName: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                Case age
-                <input
-                  type="number"
-                  min="0"
-                  value={form.age}
-                  onChange={(e) => setForm({ ...form, age: e.target.value })}
-                />
-                <small>hours since creation</small>
-              </label>
-              <label>
-                Priority
-                <select
-                  value={form.priority}
-                  onChange={(e) =>
-                    setForm({ ...form, priority: e.target.value })
-                  }
-                >
-                  {["Low", "Normal", "High", "Critical"].map((item) => (
-                    <option key={item}>{item}</option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Agent updates
-                <input
-                  type="number"
-                  min="0"
-                  value={form.updates}
-                  onChange={(e) =>
-                    setForm({ ...form, updates: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                Sentiment
-                <select
-                  value={form.sentiment}
-                  onChange={(e) =>
-                    setForm({ ...form, sentiment: e.target.value })
-                  }
-                >
-                  {["Positive", "Neutral", "Negative"].map((item) => (
-                    <option key={item}>{item}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-
-            <button
-              className="button-dark add-case-btn"
-              onClick={handleAddCase}
-            >
-              ＋ Add predicted case
-            </button>
-
-            <p className="simulator-note">
-              Adjust parameters to instantly forecast breach risk. Live queue
-              metrics and tables will update immediately once added.
-            </p>
-          </div>
-
-          {/* Live Queue Panel */}
-          <div className="rich-panel">
-            <div className="rich-panel-title">
-              <div>
-                <p className="eyebrow">Live queue</p>
-                <h2>Needs attention</h2>
-              </div>
+        <div className="sidebar-section">
+          <p className="sidebar-section-title">Main Menu</p>
+          <nav className="sidebar-links">
+            {["Overview", "Cases", "Analytics", "Settings"].map((tab) => (
               <button
-                className="text-link"
-                onClick={() => setActiveTab("Cases")}
+                key={tab}
+                className={`sidebar-link ${activeTab === tab ? "active" : ""}`}
+                onClick={() => setActiveTab(tab)}
               >
-                View detail grid →
-              </button>
-            </div>
-
-            {/* Quick Filters */}
-            <div className="quick-search-bar">
-              <input
-                type="text"
-                placeholder="Search customer or case ID..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <select
-                value={filterRisk}
-                onChange={(e) => setFilterRisk(e.target.value)}
-              >
-                <option value="All">All Risks</option>
-                <option value="Critical">Critical</option>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-            </div>
-
-            <div className="rich-case-list">
-              {filteredCases.length === 0 ? (
-                <div className="empty-state">
-                  No matching cases in the queue.
-                </div>
-              ) : (
-                filteredCases.map((item) => (
-                  <div className="rich-case-card" key={item.id}>
-                    <div
-                      className="case-clickable-area"
-                      onClick={() => handleLoadCase(item)}
-                    >
-                      <div className="case-main-info">
-                        <strong>{item.customer}</strong>
-                        <span>
-                          {item.id} · {item.service}
-                        </span>
-                      </div>
-                      <div className="case-meta-info">
-                        <span className="owner-text">{item.owner}</span>
-                        <small className="time-remaining">
-                          {item.remaining}m remaining
-                        </small>
-                      </div>
-                      <div
-                        className="sentiment-display"
-                        title={`Sentiment: ${item.sentiment}`}
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
-                        {sentimentIndicator(item.sentiment)}
-                      </div>
-                      <span
-                        className={`risk-badge ${item.risk.toLowerCase()}-badge`}
-                      >
-                        {item.risk} ({item.score}%)
-                      </span>
-                    </div>
-                    <button
-                      className="resolve-case-btn"
-                      title="Resolve case"
-                      onClick={() => handleResolveCase(item.id)}
-                    >
-                      ✓
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* CASES DETAILED GRID TAB */}
-      {activeTab === "Cases" && (
-        <section className="rich-panel cases-tab-container">
-          <div className="cases-tab-header">
-            <div>
-              <button
-                className="text-link"
-                onClick={() => setActiveTab("Overview")}
-                style={{ marginBottom: "8px", display: "block", padding: 0 }}
-              >
-                ← Back to simulator
-              </button>
-              <p className="eyebrow">Detailed queue</p>
-              <h2>Manage SLA Cases</h2>
-            </div>
-
-            <div className="filter-controls-group">
-              <input
-                type="text"
-                placeholder="Search customer..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-input"
-              />
-              <select
-                value={filterRisk}
-                onChange={(e) => setFilterRisk(e.target.value)}
-                className="select-input"
-              >
-                <option value="All">All Risks</option>
-                <option value="Critical">Critical</option>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-              <select
-                value={sortField}
-                onChange={(e) => setSortField(e.target.value)}
-                className="select-input"
-              >
-                <option value="remaining">Time Remaining</option>
-                <option value="age">Case Age</option>
-                <option value="score">Breach Score</option>
-              </select>
-              <button
-                onClick={() =>
-                  setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
-                }
-                className="sort-direction-btn"
-              >
-                {sortOrder === "asc" ? "Ascending ↑" : "Descending ↓"}
-              </button>
-            </div>
-          </div>
-
-          <div className="cases-table-wrapper">
-            <table className="custom-cases-table">
-              <thead>
-                <tr>
-                  <th>Case Info</th>
-                  <th>Service</th>
-                  <th>Age & Updates</th>
-                  <th>Sentiment</th>
-                  <th>Breach Risk</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredCases.length === 0 ? (
-                  <tr>
-                    <td colSpan="6" className="table-empty-state">
-                      No cases found matching filters.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredCases.map((item) => (
-                    <tr key={item.id} className="case-row-item">
-                      <td>
-                        <div className="table-customer-cell">
-                          <strong>{item.customer}</strong>
-                          <span className="case-sub-text">
-                            {item.id} · Owner: {item.owner}
-                          </span>
-                        </div>
-                      </td>
-                      <td>{item.service}</td>
-                      <td>
-                        <div className="table-stats-cell">
-                          <span>Age: {item.age} hrs</span>
-                          <span className="case-sub-text">
-                            {item.updates} updates
-                          </span>
-                        </div>
-                      </td>
-                      <td>
-                        <span className="sentiment-pill" title={item.sentiment}>
-                          {sentimentIndicator(item.sentiment)} {item.sentiment}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="table-risk-cell">
-                          <span
-                            className={`risk-badge ${item.risk.toLowerCase()}-badge`}
-                          >
-                            {item.risk}
-                          </span>
-                          <span className="risk-percentage">
-                            {item.score}% breach likelihood
-                          </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="table-actions-cell">
-                          <button
-                            className="table-action-btn load-btn"
-                            onClick={() => handleLoadCase(item)}
-                            title="Load into simulator"
-                          >
-                            Simulate
-                          </button>
-                          <button
-                            className="table-action-btn resolve-btn"
-                            onClick={() => handleResolveCase(item.id)}
-                            title="Resolve SLA case"
-                          >
-                            Resolve
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
+                {tabIcon(tab)}
+                <span>{tab}</span>
+                {activeTab === tab && (
+                  <span className="arrow-indicator">›</span>
                 )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )}
-
-      {/* ANALYTICS TAB */}
-      {activeTab === "Analytics" && (
-        <section className="analytics-tab-container">
-          <div className="rich-grid">
-            {/* Risk Distribution Bar Chart */}
-            <div className="rich-panel">
-              <p className="eyebrow">Risk levels</p>
-              <h2>Breach Risk Distribution</h2>
-
-              <div className="analytics-chart-container">
-                {/* SVG Bar Chart */}
-                <svg viewBox="0 0 400 240" className="svg-bar-chart">
-                  {/* Grid Lines */}
-                  <line
-                    x1="40"
-                    y1="40"
-                    x2="380"
-                    y2="40"
-                    stroke="#eee"
-                    strokeDasharray="3"
-                  />
-                  <line
-                    x1="40"
-                    y1="90"
-                    x2="380"
-                    y2="90"
-                    stroke="#eee"
-                    strokeDasharray="3"
-                  />
-                  <line
-                    x1="40"
-                    y1="140"
-                    x2="380"
-                    y2="140"
-                    stroke="#eee"
-                    strokeDasharray="3"
-                  />
-                  <line x1="40" y1="190" x2="380" y2="190" stroke="#eee" />
-
-                  {/* Calculations for heights */}
-                  {(() => {
-                    const counts = {
-                      Low: scoredCases.filter((c) => c.risk === "Low").length,
-                      Medium: scoredCases.filter((c) => c.risk === "Medium")
-                        .length,
-                      High: scoredCases.filter((c) => c.risk === "High").length,
-                      Critical: scoredCases.filter((c) => c.risk === "Critical")
-                        .length,
-                    };
-                    const maxVal = Math.max(
-                      1,
-                      counts.Low,
-                      counts.Medium,
-                      counts.High,
-                      counts.Critical,
-                    );
-                    const getBarHeight = (val) => (val / maxVal) * 140;
-
-                    return (
-                      <>
-                        {/* Bars: [x, height, val, label, color] */}
-                        {[
-                          {
-                            x: 60,
-                            val: counts.Low,
-                            label: "Low",
-                            color: "#1f8a65",
-                          },
-                          {
-                            x: 140,
-                            val: counts.Medium,
-                            label: "Medium",
-                            color: "#c08532",
-                          },
-                          {
-                            x: 220,
-                            val: counts.High,
-                            label: "High",
-                            color: "#f54e00",
-                          },
-                          {
-                            x: 300,
-                            val: counts.Critical,
-                            label: "Critical",
-                            color: "#cf2d56",
-                          },
-                        ].map((bar, i) => {
-                          const h = getBarHeight(bar.val);
-                          const y = 190 - h;
-                          return (
-                            <g key={i} className="bar-group">
-                              <rect
-                                x={bar.x}
-                                y={y}
-                                width="40"
-                                height={h}
-                                fill={bar.color}
-                                rx="4"
-                                className="chart-rect"
-                              />
-                              {/* Label text */}
-                              <text
-                                x={bar.x + 20}
-                                y="210"
-                                textAnchor="middle"
-                                className="chart-axis-label"
-                              >
-                                {bar.label}
-                              </text>
-                              {/* Value label */}
-                              <text
-                                x={bar.x + 20}
-                                y={y - 8}
-                                textAnchor="middle"
-                                className="chart-value-label"
-                              >
-                                {bar.val}
-                              </text>
-                            </g>
-                          );
-                        })}
-                      </>
-                    );
-                  })()}
-                </svg>
-              </div>
-            </div>
-
-            {/* Performance Gauges */}
-            <div className="rich-panel">
-              <p className="eyebrow">SLA Health index</p>
-              <h2>Key Indicators</h2>
-
-              <div className="gauges-grid">
-                <div className="gauge-card">
-                  <svg viewBox="0 0 100 100" className="radial-progress-svg">
-                    <circle cx="50" cy="50" r="40" className="radial-bg" />
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="40"
-                      className="radial-fill"
-                      style={{
-                        strokeDasharray: `${2 * Math.PI * 40}`,
-                        strokeDashoffset: `${2 * Math.PI * 40 * (1 - slaHealthIndex / 100)}`,
-                      }}
-                    />
-                    <text x="50" y="55" className="radial-text">
-                      {slaHealthIndex}%
-                    </text>
-                  </svg>
-                  <span>SLA Health Index</span>
-                  <small>Tickets in Low or Medium risk bounds</small>
-                </div>
-
-                <div className="gauge-card">
-                  {(() => {
-                    const avgBreachScore =
-                      scoredCases.length > 0
-                        ? Math.round(
-                            scoredCases.reduce((sum, c) => sum + c.score, 0) /
-                              scoredCases.length,
-                          )
-                        : 0;
-                    return (
-                      <>
-                        <svg
-                          viewBox="0 0 100 100"
-                          className="radial-progress-svg score-gauge"
-                        >
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="40"
-                            className="radial-bg"
-                          />
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="40"
-                            className="radial-fill"
-                            style={{
-                              strokeDasharray: `${2 * Math.PI * 40}`,
-                              strokeDashoffset: `${2 * Math.PI * 40 * (1 - avgBreachScore / 100)}`,
-                            }}
-                          />
-                          <text x="50" y="55" className="radial-text">
-                            {avgBreachScore}%
-                          </text>
-                        </svg>
-                        <span>Avg. Breach Score</span>
-                        <small>Average risk probability of the queue</small>
-                      </>
-                    );
-                  })()}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* SETTINGS TAB */}
-      {activeTab === "Settings" && (
-        <section className="rich-panel settings-tab-container">
-          <div className="settings-header">
-            <p className="eyebrow">Risk model adjustments</p>
-            <h2>Configure Weight Matrices</h2>
-            <p>
-              Customize the math coefficients that calculate SLA breach
-              probabilities. Changes apply immediately across the entire
-              workspace.
-            </p>
-          </div>
-
-          <div className="settings-sections-grid">
-            {/* Priority Weight settings */}
-            <div className="settings-card">
-              <h3>Priority Weights</h3>
-              <div className="settings-sliders">
-                {Object.keys(weights.priority).map((priority) => (
-                  <label key={priority} className="slider-label">
-                    <div className="slider-header-info">
-                      <span>{priority}</span>
-                      <strong>{weights.priority[priority]} pts</strong>
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="50"
-                      value={weights.priority[priority]}
-                      onChange={(e) =>
-                        setWeights({
-                          ...weights,
-                          priority: {
-                            ...weights.priority,
-                            [priority]: Number(e.target.value),
-                          },
-                        })
-                      }
-                    />
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Sentiment Weight settings */}
-            <div className="settings-card">
-              <h3>Sentiment Weights</h3>
-              <div className="settings-sliders">
-                {Object.keys(weights.sentiment).map((sentiment) => (
-                  <label key={sentiment} className="slider-label">
-                    <div className="slider-header-info">
-                      <span>{sentiment} Sentiment</span>
-                      <strong>{weights.sentiment[sentiment]} pts</strong>
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="55"
-                      value={weights.sentiment[sentiment]}
-                      onChange={(e) =>
-                        setWeights({
-                          ...weights,
-                          sentiment: {
-                            ...weights.sentiment,
-                            [sentiment]: Number(e.target.value),
-                          },
-                        })
-                      }
-                    />
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Decay and Coefficients settings */}
-            <div className="settings-card long-card">
-              <h3>Decay & Age Coefficients</h3>
-              <div className="settings-sliders">
-                <label className="slider-label">
-                  <div className="slider-header-info">
-                    <span>
-                      Updates Decay Multiplier (reduces risk per update)
-                    </span>
-                    <strong>{weights.updatesMultiplier} pts / update</strong>
-                  </div>
-                  <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    value={weights.updatesMultiplier}
-                    onChange={(e) =>
-                      setWeights({
-                        ...weights,
-                        updatesMultiplier: Number(e.target.value),
-                      })
-                    }
-                  />
-                </label>
-
-                <label className="slider-label">
-                  <div className="slider-header-info">
-                    <span>Maximum updates discount</span>
-                    <strong>{weights.updatesMaxSubtract} pts max</strong>
-                  </div>
-                  <input
-                    type="range"
-                    min="10"
-                    max="60"
-                    value={weights.updatesMaxSubtract}
-                    onChange={(e) =>
-                      setWeights({
-                        ...weights,
-                        updatesMaxSubtract: Number(e.target.value),
-                      })
-                    }
-                  />
-                </label>
-
-                <label className="slider-label">
-                  <div className="slider-header-info">
-                    <span>Age multiplier (increases risk over time)</span>
-                    <strong>{weights.ageMultiplier} pts / hr</strong>
-                  </div>
-                  <input
-                    type="range"
-                    min="0.1"
-                    max="3.0"
-                    step="0.05"
-                    value={weights.ageMultiplier}
-                    onChange={(e) =>
-                      setWeights({
-                        ...weights,
-                        ageMultiplier: Number(e.target.value),
-                      })
-                    }
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="settings-actions">
-            <button
-              className="button-dark reset-weights-btn"
-              onClick={() => setWeights(defaultWeights)}
+              </button>
+            ))}
+          </nav>
+        </div>
+        <div className="sidebar-footer">
+          <button className="sidebar-link back-home-btn" onClick={onHome}>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ marginRight: "8px" }}
             >
-              Reset to system defaults
-            </button>
-          </div>
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Exit to Home</span>
+          </button>
+        </div>
+      </aside>
 
-          <div className="settings-formula-sandbox">
-            <h3>Live Equation Preview</h3>
-            <div className="formula-box-preview">
-              <code>
-                Breach Score = priorityWeight({weights.priority[form.priority]})
-                + sentimentWeight({weights.sentiment[form.sentiment]}) + max(0,{" "}
-                {weights.updatesMaxSubtract} - updates({form.updates}) ×{" "}
-                {weights.updatesMultiplier}) + min({weights.ageMaxAdd}, age(
-                {form.age}) × {weights.ageMultiplier})
-              </code>
-              <div className="calculated-result-badge">
-                Result: <strong>{prediction.score}%</strong> likelihood ·{" "}
+      {/* Main Dashboard Content Area */}
+      <main className="rich-dashboard-content">
+        {/* Stats Cards Section */}
+        <section className="rich-stats">
+          <article>
+            <span>Open cases</span>
+            <strong>{totalCount}</strong>
+            <small>Across all service queues</small>
+          </article>
+          <article>
+            <span>At-risk cases</span>
+            <strong>{atRiskCount}</strong>
+            <small>Need attention today</small>
+          </article>
+          <article>
+            <span>Critical risk</span>
+            <strong>{criticalCount}</strong>
+            <small>Likely to breach soon</small>
+          </article>
+          <article>
+            <span>SLA Health Index</span>
+            <strong>{slaHealthIndex}%</strong>
+            <small>Cases within safe bounds</small>
+          </article>
+        </section>
+
+        {/* OVERVIEW TAB */}
+        {activeTab === "Overview" && (
+          <section className="rich-grid">
+            {/* Simulator Panel */}
+            <div className="rich-panel simulator">
+              <div className="rich-panel-title">
+                <div>
+                  <p className="eyebrow">Risk simulator</p>
+                  <h2>Predict a case</h2>
+                </div>
                 <span
-                  className={`risk-badge ${prediction.label.toLowerCase()}-badge`}
+                  className={`prediction-pill ${prediction.label.toLowerCase()}-pill`}
                 >
-                  {prediction.label} Risk
+                  {prediction.label} risk ({prediction.score}%)
                 </span>
               </div>
-            </div>
-          </div>
-        </section>
-      )}
 
-      {/* HOW IT WORKS / FOOTER FOOTPRINT */}
-      <section className="rich-panel rich-explanation">
-        <div>
-          <p className="eyebrow">How it works</p>
-          <h2>Decisions you can explain.</h2>
-        </div>
-        <p>
-          Stratum weighs SLA parameters using dynamic algorithms that compute
-          severity in real time. Customize these rules inside the Settings tab
-          to match your company's support workflows.
-        </p>
-      </section>
-    </main>
+              <div className="risk-meter">
+                <div
+                  className={`risk-meter-bar ${prediction.label.toLowerCase()}`}
+                  style={{ width: `${prediction.score}%` }}
+                />
+              </div>
+
+              <div className="risk-inputs">
+                <label>
+                  Customer Name
+                  <input
+                    type="text"
+                    placeholder="e.g. Acme Corp"
+                    value={form.customerName || ""}
+                    onChange={(e) =>
+                      setForm({ ...form, customerName: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  SLA Target Service
+                  <input
+                    type="text"
+                    placeholder="e.g. Incident response"
+                    value={form.serviceName || ""}
+                    onChange={(e) =>
+                      setForm({ ...form, serviceName: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  Case age
+                  <input
+                    type="number"
+                    min="0"
+                    value={form.age}
+                    onChange={(e) => setForm({ ...form, age: e.target.value })}
+                  />
+                  <small>hours since creation</small>
+                </label>
+                <label>
+                  Priority
+                  <select
+                    value={form.priority}
+                    onChange={(e) =>
+                      setForm({ ...form, priority: e.target.value })
+                    }
+                  >
+                    {["Low", "Normal", "High", "Critical"].map((item) => (
+                      <option key={item}>{item}</option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Agent updates
+                  <input
+                    type="number"
+                    min="0"
+                    value={form.updates}
+                    onChange={(e) =>
+                      setForm({ ...form, updates: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  Sentiment
+                  <select
+                    value={form.sentiment}
+                    onChange={(e) =>
+                      setForm({ ...form, sentiment: e.target.value })
+                    }
+                  >
+                    {["Positive", "Neutral", "Negative"].map((item) => (
+                      <option key={item}>{item}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <button
+                className="button-dark add-case-btn"
+                onClick={handleAddCase}
+              >
+                ＋ Add predicted case
+              </button>
+
+              <p className="simulator-note">
+                Adjust parameters to instantly forecast breach risk. Live queue
+                metrics and tables will update immediately once added.
+              </p>
+            </div>
+
+            {/* Live Queue Panel */}
+            <div className="rich-panel">
+              <div className="rich-panel-title">
+                <div>
+                  <p className="eyebrow">Live queue</p>
+                  <h2>Needs attention</h2>
+                </div>
+                <button
+                  className="text-link"
+                  onClick={() => setActiveTab("Cases")}
+                >
+                  View detail grid →
+                </button>
+              </div>
+
+              {/* Quick Filters */}
+              <div className="quick-search-bar">
+                <input
+                  type="text"
+                  placeholder="Search customer or case ID..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <select
+                  value={filterRisk}
+                  onChange={(e) => setFilterRisk(e.target.value)}
+                >
+                  <option value="All">All Risks</option>
+                  <option value="Critical">Critical</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+
+              <div className="rich-case-list">
+                {filteredCases.length === 0 ? (
+                  <div className="empty-state">
+                    No matching cases in the queue.
+                  </div>
+                ) : (
+                  filteredCases.map((item) => (
+                    <div className="rich-case-card" key={item.id}>
+                      <div
+                        className="case-clickable-area"
+                        onClick={() => handleLoadCase(item)}
+                      >
+                        <div className="case-main-info">
+                          <strong>{item.customer}</strong>
+                          <span>
+                            {item.id} · {item.service}
+                          </span>
+                        </div>
+                        <div className="case-meta-info">
+                          <span className="owner-text">{item.owner}</span>
+                          <small className="time-remaining">
+                            {item.remaining}m remaining
+                          </small>
+                        </div>
+                        <div
+                          className="sentiment-display"
+                          title={`Sentiment: ${item.sentiment}`}
+                          style={{ display: "flex", justifyContent: "center" }}
+                        >
+                          {sentimentIndicator(item.sentiment)}
+                        </div>
+                        <span
+                          className={`risk-badge ${item.risk.toLowerCase()}-badge`}
+                        >
+                          {item.risk} ({item.score}%)
+                        </span>
+                      </div>
+                      <button
+                        className="resolve-case-btn"
+                        title="Resolve case"
+                        onClick={() => handleResolveCase(item.id)}
+                      >
+                        ✓
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* CASES DETAILED GRID TAB */}
+        {activeTab === "Cases" && (
+          <section className="rich-panel cases-tab-container">
+            <div className="cases-tab-header">
+              <div>
+                <button
+                  className="text-link"
+                  onClick={() => setActiveTab("Overview")}
+                  style={{ marginBottom: "8px", display: "block", padding: 0 }}
+                >
+                  ← Back to simulator
+                </button>
+                <p className="eyebrow">Detailed queue</p>
+                <h2>Manage SLA Cases</h2>
+              </div>
+
+              <div className="filter-controls-group">
+                <input
+                  type="text"
+                  placeholder="Search customer..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="search-input"
+                />
+                <select
+                  value={filterRisk}
+                  onChange={(e) => setFilterRisk(e.target.value)}
+                  className="select-input"
+                >
+                  <option value="All">All Risks</option>
+                  <option value="Critical">Critical</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+                <select
+                  value={sortField}
+                  onChange={(e) => setSortField(e.target.value)}
+                  className="select-input"
+                >
+                  <option value="remaining">Time Remaining</option>
+                  <option value="age">Case Age</option>
+                  <option value="score">Breach Score</option>
+                </select>
+                <button
+                  onClick={() =>
+                    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
+                  }
+                  className="sort-direction-btn"
+                >
+                  {sortOrder === "asc" ? "Ascending ↑" : "Descending ↓"}
+                </button>
+              </div>
+            </div>
+
+            <div className="cases-table-wrapper">
+              <table className="custom-cases-table">
+                <thead>
+                  <tr>
+                    <th>Case Info</th>
+                    <th>Service</th>
+                    <th>Age & Updates</th>
+                    <th>Sentiment</th>
+                    <th>Breach Risk</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredCases.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" className="table-empty-state">
+                        No cases found matching filters.
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredCases.map((item) => (
+                      <tr key={item.id} className="case-row-item">
+                        <td>
+                          <div className="table-customer-cell">
+                            <strong>{item.customer}</strong>
+                            <span className="case-sub-text">
+                              {item.id} · Owner: {item.owner}
+                            </span>
+                          </div>
+                        </td>
+                        <td>{item.service}</td>
+                        <td>
+                          <div className="table-stats-cell">
+                            <span>Age: {item.age} hrs</span>
+                            <span className="case-sub-text">
+                              {item.updates} updates
+                            </span>
+                          </div>
+                        </td>
+                        <td>
+                          <span
+                            className="sentiment-pill"
+                            title={item.sentiment}
+                          >
+                            {sentimentIndicator(item.sentiment)}{" "}
+                            {item.sentiment}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="table-risk-cell">
+                            <span
+                              className={`risk-badge ${item.risk.toLowerCase()}-badge`}
+                            >
+                              {item.risk}
+                            </span>
+                            <span className="risk-percentage">
+                              {item.score}% breach likelihood
+                            </span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="table-actions-cell">
+                            <button
+                              className="table-action-btn load-btn"
+                              onClick={() => handleLoadCase(item)}
+                              title="Load into simulator"
+                            >
+                              Simulate
+                            </button>
+                            <button
+                              className="table-action-btn resolve-btn"
+                              onClick={() => handleResolveCase(item.id)}
+                              title="Resolve SLA case"
+                            >
+                              Resolve
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
+        {/* ANALYTICS TAB */}
+        {activeTab === "Analytics" && (
+          <section className="analytics-tab-container">
+            <div className="rich-grid">
+              {/* Risk Distribution Bar Chart */}
+              <div className="rich-panel">
+                <p className="eyebrow">Risk levels</p>
+                <h2>Breach Risk Distribution</h2>
+
+                <div className="analytics-chart-container">
+                  {/* SVG Bar Chart */}
+                  <svg viewBox="0 0 400 240" className="svg-bar-chart">
+                    {/* Grid Lines */}
+                    <line
+                      x1="40"
+                      y1="40"
+                      x2="380"
+                      y2="40"
+                      stroke="#eee"
+                      strokeDasharray="3"
+                    />
+                    <line
+                      x1="40"
+                      y1="90"
+                      x2="380"
+                      y2="90"
+                      stroke="#eee"
+                      strokeDasharray="3"
+                    />
+                    <line
+                      x1="40"
+                      y1="140"
+                      x2="380"
+                      y2="140"
+                      stroke="#eee"
+                      strokeDasharray="3"
+                    />
+                    <line x1="40" y1="190" x2="380" y2="190" stroke="#eee" />
+
+                    {/* Calculations for heights */}
+                    {(() => {
+                      const counts = {
+                        Low: scoredCases.filter((c) => c.risk === "Low").length,
+                        Medium: scoredCases.filter((c) => c.risk === "Medium")
+                          .length,
+                        High: scoredCases.filter((c) => c.risk === "High")
+                          .length,
+                        Critical: scoredCases.filter(
+                          (c) => c.risk === "Critical",
+                        ).length,
+                      };
+                      const maxVal = Math.max(
+                        1,
+                        counts.Low,
+                        counts.Medium,
+                        counts.High,
+                        counts.Critical,
+                      );
+                      const getBarHeight = (val) => (val / maxVal) * 140;
+
+                      return (
+                        <>
+                          {/* Bars: [x, height, val, label, color] */}
+                          {[
+                            {
+                              x: 60,
+                              val: counts.Low,
+                              label: "Low",
+                              color: "#1f8a65",
+                            },
+                            {
+                              x: 140,
+                              val: counts.Medium,
+                              label: "Medium",
+                              color: "#c08532",
+                            },
+                            {
+                              x: 220,
+                              val: counts.High,
+                              label: "High",
+                              color: "#f54e00",
+                            },
+                            {
+                              x: 300,
+                              val: counts.Critical,
+                              label: "Critical",
+                              color: "#cf2d56",
+                            },
+                          ].map((bar, i) => {
+                            const h = getBarHeight(bar.val);
+                            const y = 190 - h;
+                            return (
+                              <g key={i} className="bar-group">
+                                <rect
+                                  x={bar.x}
+                                  y={y}
+                                  width="40"
+                                  height={h}
+                                  fill={bar.color}
+                                  rx="4"
+                                  className="chart-rect"
+                                />
+                                {/* Label text */}
+                                <text
+                                  x={bar.x + 20}
+                                  y="210"
+                                  textAnchor="middle"
+                                  className="chart-axis-label"
+                                >
+                                  {bar.label}
+                                </text>
+                                {/* Value label */}
+                                <text
+                                  x={bar.x + 20}
+                                  y={y - 8}
+                                  textAnchor="middle"
+                                  className="chart-value-label"
+                                >
+                                  {bar.val}
+                                </text>
+                              </g>
+                            );
+                          })}
+                        </>
+                      );
+                    })()}
+                  </svg>
+                </div>
+              </div>
+
+              {/* Performance Gauges */}
+              <div className="rich-panel">
+                <p className="eyebrow">SLA Health index</p>
+                <h2>Key Indicators</h2>
+
+                <div className="gauges-grid">
+                  <div className="gauge-card">
+                    <svg viewBox="0 0 100 100" className="radial-progress-svg">
+                      <circle cx="50" cy="50" r="40" className="radial-bg" />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        className="radial-fill"
+                        style={{
+                          strokeDasharray: `${2 * Math.PI * 40}`,
+                          strokeDashoffset: `${2 * Math.PI * 40 * (1 - slaHealthIndex / 100)}`,
+                        }}
+                      />
+                      <text x="50" y="55" className="radial-text">
+                        {slaHealthIndex}%
+                      </text>
+                    </svg>
+                    <span>SLA Health Index</span>
+                    <small>Tickets in Low or Medium risk bounds</small>
+                  </div>
+
+                  <div className="gauge-card">
+                    {(() => {
+                      const avgBreachScore =
+                        scoredCases.length > 0
+                          ? Math.round(
+                              scoredCases.reduce((sum, c) => sum + c.score, 0) /
+                                scoredCases.length,
+                            )
+                          : 0;
+                      return (
+                        <>
+                          <svg
+                            viewBox="0 0 100 100"
+                            className="radial-progress-svg score-gauge"
+                          >
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="40"
+                              className="radial-bg"
+                            />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="40"
+                              className="radial-fill"
+                              style={{
+                                strokeDasharray: `${2 * Math.PI * 40}`,
+                                strokeDashoffset: `${2 * Math.PI * 40 * (1 - avgBreachScore / 100)}`,
+                              }}
+                            />
+                            <text x="50" y="55" className="radial-text">
+                              {avgBreachScore}%
+                            </text>
+                          </svg>
+                          <span>Avg. Breach Score</span>
+                          <small>Average risk probability of the queue</small>
+                        </>
+                      );
+                    })()}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* SETTINGS TAB */}
+        {activeTab === "Settings" && (
+          <section className="rich-panel settings-tab-container">
+            <div className="settings-header">
+              <p className="eyebrow">Risk model adjustments</p>
+              <h2>Configure Weight Matrices</h2>
+              <p>
+                Customize the math coefficients that calculate SLA breach
+                probabilities. Changes apply immediately across the entire
+                workspace.
+              </p>
+            </div>
+
+            <div className="settings-sections-grid">
+              {/* Priority Weight settings */}
+              <div className="settings-card">
+                <h3>Priority Weights</h3>
+                <div className="settings-sliders">
+                  {Object.keys(weights.priority).map((priority) => (
+                    <label key={priority} className="slider-label">
+                      <div className="slider-header-info">
+                        <span>{priority}</span>
+                        <strong>{weights.priority[priority]} pts</strong>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="50"
+                        value={weights.priority[priority]}
+                        onChange={(e) =>
+                          setWeights({
+                            ...weights,
+                            priority: {
+                              ...weights.priority,
+                              [priority]: Number(e.target.value),
+                            },
+                          })
+                        }
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Sentiment Weight settings */}
+              <div className="settings-card">
+                <h3>Sentiment Weights</h3>
+                <div className="settings-sliders">
+                  {Object.keys(weights.sentiment).map((sentiment) => (
+                    <label key={sentiment} className="slider-label">
+                      <div className="slider-header-info">
+                        <span>{sentiment} Sentiment</span>
+                        <strong>{weights.sentiment[sentiment]} pts</strong>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="55"
+                        value={weights.sentiment[sentiment]}
+                        onChange={(e) =>
+                          setWeights({
+                            ...weights,
+                            sentiment: {
+                              ...weights.sentiment,
+                              [sentiment]: Number(e.target.value),
+                            },
+                          })
+                        }
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Decay and Coefficients settings */}
+              <div className="settings-card long-card">
+                <h3>Decay & Age Coefficients</h3>
+                <div className="settings-sliders">
+                  <label className="slider-label">
+                    <div className="slider-header-info">
+                      <span>
+                        Updates Decay Multiplier (reduces risk per update)
+                      </span>
+                      <strong>{weights.updatesMultiplier} pts / update</strong>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      value={weights.updatesMultiplier}
+                      onChange={(e) =>
+                        setWeights({
+                          ...weights,
+                          updatesMultiplier: Number(e.target.value),
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label className="slider-label">
+                    <div className="slider-header-info">
+                      <span>Maximum updates discount</span>
+                      <strong>{weights.updatesMaxSubtract} pts max</strong>
+                    </div>
+                    <input
+                      type="range"
+                      min="10"
+                      max="60"
+                      value={weights.updatesMaxSubtract}
+                      onChange={(e) =>
+                        setWeights({
+                          ...weights,
+                          updatesMaxSubtract: Number(e.target.value),
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label className="slider-label">
+                    <div className="slider-header-info">
+                      <span>Age multiplier (increases risk over time)</span>
+                      <strong>{weights.ageMultiplier} pts / hr</strong>
+                    </div>
+                    <input
+                      type="range"
+                      min="0.1"
+                      max="3.0"
+                      step="0.05"
+                      value={weights.ageMultiplier}
+                      onChange={(e) =>
+                        setWeights({
+                          ...weights,
+                          ageMultiplier: Number(e.target.value),
+                        })
+                      }
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="settings-actions">
+              <button
+                className="button-dark reset-weights-btn"
+                onClick={() => setWeights(defaultWeights)}
+              >
+                Reset to system defaults
+              </button>
+            </div>
+
+            <div className="settings-formula-sandbox">
+              <h3>Live Equation Preview</h3>
+              <div className="formula-box-preview">
+                <code>
+                  Breach Score = priorityWeight(
+                  {weights.priority[form.priority]}) + sentimentWeight(
+                  {weights.sentiment[form.sentiment]}) + max(0,{" "}
+                  {weights.updatesMaxSubtract} - updates({form.updates}) ×{" "}
+                  {weights.updatesMultiplier}) + min({weights.ageMaxAdd}, age(
+                  {form.age}) × {weights.ageMultiplier})
+                </code>
+                <div className="calculated-result-badge">
+                  Result: <strong>{prediction.score}%</strong> likelihood ·{" "}
+                  <span
+                    className={`risk-badge ${prediction.label.toLowerCase()}-badge`}
+                  >
+                    {prediction.label} Risk
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* HOW IT WORKS / FOOTER FOOTPRINT */}
+        <section className="rich-panel rich-explanation">
+          <div>
+            <p className="eyebrow">How it works</p>
+            <h2>Decisions you can explain.</h2>
+          </div>
+          <p>
+            Stratum weighs SLA parameters using dynamic algorithms that compute
+            severity in real time. Customize these rules inside the Settings tab
+            to match your company's support workflows.
+          </p>
+        </section>
+      </main>
+    </div>
   );
 }
 
