@@ -4,7 +4,7 @@ Stratum is a lightweight SLA breach-risk dashboard for support teams. It turns e
 
 ## Preview
 
-![Stratum Dashboard](public/preview.png)
+![Stratum Dashboard](public/preview.jpeg)
 
 ## What it includes
 
