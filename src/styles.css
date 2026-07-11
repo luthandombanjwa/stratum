@@ -893,3 +893,541 @@ h3 {
     padding: 18px;
   }
 }
+
+/* Quick search & filter bar */
+.quick-search-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+.quick-search-bar input {
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 12px;
+  background: var(--cream);
+  color: var(--ink);
+}
+.quick-search-bar select {
+  width: 100px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 12px;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+/* Rich Case Card layouts in Overview */
+.rich-case-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+  transition: all 0.2s ease;
+}
+.rich-case-card:hover {
+  background: rgba(234, 244, 252, 0.3);
+}
+.case-clickable-area {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.3fr 1fr;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+.case-main-info strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.case-main-info span {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.case-meta-info .owner-text {
+  display: block;
+  font-size: 11px;
+  color: var(--body);
+}
+.case-meta-info .time-remaining {
+  display: block;
+  margin-top: 2px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.sentiment-display {
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Badges and pills */
+.risk-badge {
+  display: inline-block;
+  justify-self: start;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+.critical-badge,
+.critical-pill {
+  background: rgba(207, 45, 86, 0.1);
+  color: #cf2d56;
+}
+.high-badge,
+.high-pill {
+  background: rgba(245, 78, 0, 0.1);
+  color: #f54e00;
+}
+.medium-badge,
+.medium-pill {
+  background: rgba(192, 133, 50, 0.1);
+  color: #c08532;
+}
+.low-badge,
+.low-pill {
+  background: rgba(31, 138, 101, 0.1);
+  color: #1f8a65;
+}
+
+/* Resolve button on case card */
+.resolve-case-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--muted);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+.resolve-case-btn:hover {
+  background: #1f8a65;
+  border-color: #1f8a65;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Add Predicted Case button style */
+.add-case-btn {
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* Risk Meter Bar coloring */
+.risk-meter-bar {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+.risk-meter-bar.critical {
+  background: #cf2d56;
+}
+.risk-meter-bar.high {
+  background: #f54e00;
+}
+.risk-meter-bar.medium {
+  background: #c08532;
+}
+.risk-meter-bar.low {
+  background: #1f8a65;
+}
+
+/* Cases Detailed Tab view */
+.cases-tab-container {
+  padding: 24px;
+}
+.cases-tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.filter-controls-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.filter-controls-group input,
+.filter-controls-group select,
+.filter-controls-group button {
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 12px;
+  background: #fff;
+  color: var(--ink);
+  padding: 0 12px;
+}
+.filter-controls-group input {
+  width: 180px;
+}
+.sort-direction-btn {
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+.sort-direction-btn:hover {
+  background: var(--blue);
+}
+
+/* Detailed table styles */
+.cases-table-wrapper {
+  overflow-x: auto;
+}
+.custom-cases-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.custom-cases-table th {
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid var(--line);
+  letter-spacing: 0.5px;
+}
+.custom-cases-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--body);
+}
+.case-row-item {
+  transition: background 0.2s ease;
+}
+.case-row-item:hover {
+  background: rgba(234, 244, 252, 0.2);
+}
+.table-customer-cell strong {
+  display: block;
+  font-size: 13px;
+  color: var(--ink);
+}
+.case-sub-text {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+  margin-top: 3px;
+}
+.sentiment-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: var(--cream);
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+.table-risk-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.risk-percentage {
+  font-size: 10px;
+  color: var(--muted);
+}
+.table-actions-cell {
+  display: flex;
+  gap: 8px;
+}
+.table-action-btn {
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.table-action-btn.load-btn:hover {
+  background: var(--blue);
+  border-color: var(--blue-strong);
+}
+.table-action-btn.resolve-btn:hover {
+  background: #cf2d56;
+  border-color: #cf2d56;
+  color: #fff;
+}
+.table-empty-state {
+  text-align: center;
+  padding: 40px !important;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Analytics charts styling */
+.analytics-chart-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+.svg-bar-chart {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+}
+.chart-rect {
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+.chart-rect:hover {
+  opacity: 0.85;
+}
+.chart-axis-label {
+  font-size: 10px;
+  fill: var(--muted);
+  font-weight: 500;
+}
+.chart-value-label {
+  font-size: 11px;
+  fill: var(--ink);
+  font-weight: 600;
+}
+
+/* Radial progress gauges */
+.gauges-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 10px 0;
+}
+.gauge-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--cream);
+}
+.gauge-card span {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 10px;
+  color: var(--ink);
+  display: block;
+}
+.gauge-card small {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+  display: block;
+}
+.radial-progress-svg {
+  width: 80px;
+  height: 80px;
+  transform: rotate(-90deg);
+}
+.radial-bg {
+  stroke: #edf1f4;
+  stroke-width: 8;
+  fill: transparent;
+}
+.radial-fill {
+  stroke: #1f8a65;
+  stroke-width: 8;
+  fill: transparent;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+}
+.score-gauge .radial-fill {
+  stroke: #f54e00;
+}
+.radial-text {
+  font-size: 18px;
+  font-weight: 600;
+  fill: var(--ink);
+  transform: rotate(90deg);
+  transform-origin: center;
+  text-anchor: middle;
+}
+
+/* Settings configurations layout */
+.settings-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.settings-header p:last-of-type {
+  font-size: 13px;
+  color: var(--body);
+  margin-top: 8px;
+  max-width: 600px;
+  line-height: 1.5;
+}
+.settings-sections-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.settings-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--card);
+}
+.settings-card.long-card {
+  grid-column: span 2;
+}
+.settings-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+.settings-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.slider-label {
+  display: block;
+  cursor: pointer;
+}
+.slider-header-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--body);
+  margin-bottom: 6px;
+}
+.slider-header-info strong {
+  color: var(--ink);
+}
+.slider-label input[type="range"] {
+  width: 100%;
+  height: 4px;
+  background: #edf1f4;
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+}
+.slider-label input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ink);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.slider-label input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.reset-weights-btn {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--body);
+  transition: all 0.2s ease;
+}
+.reset-weights-btn:hover {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+/* Formula Sandbox */
+.settings-formula-sandbox {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--blue);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.settings-formula-sandbox h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.formula-box-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.formula-box-preview code {
+  display: block;
+  padding: 12px;
+  background: #fff;
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--body);
+  border: 1px solid var(--line);
+  word-break: break-all;
+  line-height: 1.5;
+}
+.calculated-result-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink);
+}
+.calculated-result-badge strong {
+  font-size: 14px;
+  color: #cf2d56;
+}
+
+/* Media adjustments for tabs and detailed list */
+@media (max-width: 760px) {
+  .case-clickable-area {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .case-clickable-area .sentiment-display {
+    grid-row: 2;
+    text-align: left;
+  }
+  .case-clickable-area .risk-badge {
+    grid-row: 2;
+  }
+  .settings-sections-grid {
+    grid-template-columns: 1fr;
+  }
+  .settings-card.long-card {
+    grid-column: span 1;
+  }
+  .filter-controls-group {
+    width: 100%;
+  }
+  .filter-controls-group input {
+    width: 100%;
+  }
+}
