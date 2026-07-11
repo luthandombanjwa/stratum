@@ -2,6 +2,10 @@
 
 Stratum is a lightweight SLA breach-risk dashboard for support teams. It turns everyday case signals into a clear risk score, helping teams focus on the work most likely to miss its service target.
 
+## Preview
+
+![Stratum Dashboard](public/preview.png)
+
 ## What it includes
 
 - A live support-case queue, ordered visually by risk level
