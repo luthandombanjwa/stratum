@@ -672,6 +672,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
+  margin-top: 24px;
   margin-bottom: 18px;
 }
 .rich-stats article,
