@@ -222,17 +222,8 @@ function Dashboard({ onHome }) {
       });
   }, [scoredCases, searchQuery, filterRisk, sortField, sortOrder]);
 
-  const sentimentEmoji = (sentiment) => {
-    switch (sentiment) {
-      case "Positive":
-        return "😊";
-      case "Neutral":
-        return "😐";
-      case "Negative":
-        return "☹️";
-      default:
-        return "😐";
-    }
+  const sentimentIndicator = (sentiment) => {
+    return <span className={`sentiment-dot ${sentiment.toLowerCase()}`} />;
   };
 
   return (
@@ -453,8 +444,9 @@ function Dashboard({ onHome }) {
                       <div
                         className="sentiment-display"
                         title={`Sentiment: ${item.sentiment}`}
+                        style={{ display: "flex", justifyContent: "center" }}
                       >
-                        {sentimentEmoji(item.sentiment)}
+                        {sentimentIndicator(item.sentiment)}
                       </div>
                       <span
                         className={`risk-badge ${item.risk.toLowerCase()}-badge`}
@@ -566,7 +558,7 @@ function Dashboard({ onHome }) {
                       </td>
                       <td>
                         <span className="sentiment-pill" title={item.sentiment}>
-                          {sentimentEmoji(item.sentiment)} {item.sentiment}
+                          {sentimentIndicator(item.sentiment)} {item.sentiment}
                         </span>
                       </td>
                       <td>

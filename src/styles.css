@@ -1144,6 +1144,21 @@ h3 {
   border-radius: 6px;
   border: 1px solid var(--line);
 }
+.sentiment-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.sentiment-dot.positive {
+  background-color: #1f8a65;
+}
+.sentiment-dot.neutral {
+  background-color: #c08532;
+}
+.sentiment-dot.negative {
+  background-color: #cf2d56;
+}
 .table-risk-cell {
   display: flex;
   flex-direction: column;
