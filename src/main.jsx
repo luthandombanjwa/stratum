@@ -1000,143 +1000,148 @@ function Dashboard({ onHome }) {
 
 function Landing({ onWorkspace }) {
   return (
-    <main className="landing-shell">
-      <nav className="landing-nav">
-        <a href="#top" aria-label="Stratum home">
-          <Brand />
-        </a>
-        <div className="nav-links">
-          <a href="#product">Product</a>
-          <a href="#why">Why Stratum</a>
-        </div>
-        <button className="button-dark nav-button" onClick={onWorkspace}>
-          Open workspace <span>↗</span>
-        </button>
-      </nav>
-
-      <section className="landing-hero" id="top">
-        <p className="eyebrow">SLA intelligence for support teams</p>
-        <h1>
-          Keep every
-          <br />
-          service promise.
-        </h1>
-        <p className="hero-sub">
-          Stratum helps support teams see SLA risk early, focus their attention,
-          and move with confidence.
-        </p>
-        <div className="hero-actions">
-          <button className="button-dark" onClick={onWorkspace}>
-            Explore the workspace <span>↗</span>
-          </button>
-          <a href="#why">
-            See how it works <span>↓</span>
-          </a>
-        </div>
-      </section>
-
-      <section className="product-band" id="product">
-        <div className="product-intro">
-          <p className="eyebrow">One clear view</p>
-          <h2>Know what needs attention before it becomes a breach.</h2>
-          <p>
-            Stratum brings the right support signals into a calm, prioritised
-            workspace.
-          </p>
-        </div>
-
-        <div className="product-preview">
-          <div className="preview-top">
+    <div className="landing-wrapper">
+      <main className="landing-shell">
+        <nav className="landing-nav">
+          <a href="#top" aria-label="Stratum home">
             <Brand />
-            <span>Today</span>
+          </a>
+          <div className="nav-links">
+            <a href="#product">Product</a>
+            <a href="#why">Why Stratum</a>
           </div>
-          <div className="preview-content">
-            <div className="preview-title">
-              <div>
-                <p>Priority queue</p>
-                <h3>Cases to review</h3>
-              </div>
-              <button onClick={onWorkspace}>Open dashboard ↗</button>
+          <button className="button-dark nav-button" onClick={onWorkspace}>
+            Open workspace <span>↗</span>
+          </button>
+        </nav>
+
+        <section className="landing-hero" id="top">
+          <p className="eyebrow">SLA intelligence for support teams</p>
+          <h1>
+            Keep every
+            <br />
+            service promise.
+          </h1>
+          <p className="hero-sub">
+            Stratum helps support teams see SLA risk early, focus their
+            attention, and move with confidence.
+          </p>
+          <div className="hero-actions">
+            <button className="button-dark" onClick={onWorkspace}>
+              Explore the workspace <span>↗</span>
+            </button>
+            <a href="#why">
+              See how it works <span>↓</span>
+            </a>
+          </div>
+        </section>
+
+        <section className="product-band" id="product">
+          <div className="product-intro">
+            <p className="eyebrow">One clear view</p>
+            <h2>Know what needs attention before it becomes a breach.</h2>
+            <p>
+              Stratum brings the right support signals into a calm, prioritised
+              workspace.
+            </p>
+          </div>
+
+          <div className="product-preview">
+            <div className="preview-top">
+              <Brand />
+              <span>Today</span>
             </div>
-            <div className="preview-metrics">
-              <div>
-                <span>Open cases</span>
-                <b>142</b>
+            <div className="preview-content">
+              <div className="preview-title">
+                <div>
+                  <p>Priority queue</p>
+                  <h3>Cases to review</h3>
+                </div>
+                <button onClick={onWorkspace}>Open dashboard ↗</button>
               </div>
-              <div>
-                <span>At risk</span>
-                <b>08</b>
+              <div className="preview-metrics">
+                <div>
+                  <span>Open cases</span>
+                  <b>142</b>
+                </div>
+                <div>
+                  <span>At risk</span>
+                  <b>08</b>
+                </div>
+                <div>
+                  <span>Within target</span>
+                  <b>94%</b>
+                </div>
               </div>
-              <div>
-                <span>Within target</span>
-                <b>94%</b>
+              <div className="preview-row">
+                <div>
+                  <strong>Acme Logistics</strong>
+                  <span>SLA-1842 · Priority support</span>
+                </div>
+                <em>18m remaining</em>
+                <i
+                  style={{
+                    background: "rgba(207, 45, 86, 0.1)",
+                    color: "#cf2d56",
+                  }}
+                >
+                  Critical
+                </i>
               </div>
-            </div>
-            <div className="preview-row">
-              <div>
-                <strong>Acme Logistics</strong>
-                <span>SLA-1842 · Priority support</span>
+              <div className="preview-row">
+                <div>
+                  <strong>Northstar Health</strong>
+                  <span>SLA-1839 · Incident response</span>
+                </div>
+                <em>42m remaining</em>
+                <i
+                  style={{
+                    background: "rgba(245, 78, 0, 0.1)",
+                    color: "#f54e00",
+                  }}
+                >
+                  High
+                </i>
               </div>
-              <em>18m remaining</em>
-              <i
-                style={{
-                  background: "rgba(207, 45, 86, 0.1)",
-                  color: "#cf2d56",
-                }}
-              >
-                Critical
-              </i>
-            </div>
-            <div className="preview-row">
-              <div>
-                <strong>Northstar Health</strong>
-                <span>SLA-1839 · Incident response</span>
-              </div>
-              <em>42m remaining</em>
-              <i
-                style={{
-                  background: "rgba(245, 78, 0, 0.1)",
-                  color: "#f54e00",
-                }}
-              >
-                High
-              </i>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="benefits" id="why">
-        <article>
-          <span>01</span>
-          <h2>See risk early.</h2>
-          <p>
-            Bring urgency, age, activity, and sentiment into one simple signal.
-          </p>
-        </article>
-        <article>
-          <span>02</span>
-          <h2>Focus the team.</h2>
-          <p>Keep everyone aligned on the cases that matter most right now.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h2>Stay on target.</h2>
-          <p>
-            Build a steady, reliable service experience your customers can
-            trust.
-          </p>
-        </article>
-      </section>
+        <section className="benefits" id="why">
+          <article>
+            <span>01</span>
+            <h2>See risk early.</h2>
+            <p>
+              Bring urgency, age, activity, and sentiment into one simple
+              signal.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h2>Focus the team.</h2>
+            <p>
+              Keep everyone aligned on the cases that matter most right now.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h2>Stay on target.</h2>
+            <p>
+              Build a steady, reliable service experience your customers can
+              trust.
+            </p>
+          </article>
+        </section>
 
-      <section className="closing">
-        <p className="eyebrow">Service, in control</p>
-        <h2>A calmer way to run support.</h2>
-        <button className="button-dark" onClick={onWorkspace}>
-          Open your workspace <span>↗</span>
-        </button>
-      </section>
-    </main>
+        <section className="closing">
+          <p className="eyebrow">Service, in control</p>
+          <h2>A calmer way to run support.</h2>
+          <button className="button-dark" onClick={onWorkspace}>
+            Open your workspace <span>↗</span>
+          </button>
+        </section>
+      </main>
+    </div>
   );
 }
 
