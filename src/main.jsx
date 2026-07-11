@@ -474,6 +474,13 @@ function Dashboard({ onHome }) {
         <section className="rich-panel cases-tab-container">
           <div className="cases-tab-header">
             <div>
+              <button
+                className="text-link"
+                onClick={() => setActiveTab("Overview")}
+                style={{ marginBottom: "8px", display: "block", padding: 0 }}
+              >
+                ← Back to simulator
+              </button>
               <p className="eyebrow">Detailed queue</p>
               <h2>Manage SLA Cases</h2>
             </div>
