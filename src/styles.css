@@ -1504,14 +1504,14 @@ h3 {
   display: grid;
   grid-template-columns: 240px 1fr;
   min-height: 100vh;
-  background: var(--cream);
+  background: #111418;
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  background: var(--card);
-  border-right: 1px solid var(--line);
+  background: #1c2127;
+  border-right: 1px solid #2d333a;
   padding: 32px 16px;
   height: 100vh;
   position: sticky;
