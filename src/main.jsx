@@ -325,22 +325,24 @@ function Dashboard({ onHome }) {
       {/* Sidebar Nav */}
       <aside
         className="sidebar-nav bp5-dark"
-        style={{ backgroundColor: "#1C2127", borderRight: "1px solid #2D333A" }}
+        style={{ backgroundColor: "#161A1D", borderRight: "1px solid #252A31" }}
       >
         <div
-          className="sidebar-brand"
-          style={{ display: "flex", alignItems: "center", height: "50px" }}
+          style={{
+            padding: "20px 16px 16px 16px",
+            borderBottom: "1px solid #252A31",
+            marginBottom: "8px",
+          }}
         >
           <span
             style={{
               fontWeight: 700,
-              fontSize: "16px",
-              letterSpacing: "-0.3px",
+              fontSize: "15px",
               color: "#F6F7F9",
+              letterSpacing: "-0.3px",
             }}
           >
-            S &nbsp;
-            <span style={{ fontWeight: 400, color: "#8F99A8" }}>stratum</span>
+            stratum
           </span>
         </div>
 
@@ -359,7 +361,6 @@ function Dashboard({ onHome }) {
               fill={true}
               style={{
                 justifyContent: "flex-start",
-                color: activeTab === "Overview" ? "#fff" : "#8F99A8",
                 marginBottom: "4px",
               }}
             />
@@ -373,7 +374,6 @@ function Dashboard({ onHome }) {
               fill={true}
               style={{
                 justifyContent: "flex-start",
-                color: activeTab === "Cases" ? "#fff" : "#8F99A8",
                 marginBottom: "4px",
               }}
             />
@@ -387,7 +387,6 @@ function Dashboard({ onHome }) {
               fill={true}
               style={{
                 justifyContent: "flex-start",
-                color: activeTab === "Analytics" ? "#fff" : "#8F99A8",
                 marginBottom: "4px",
               }}
             />
@@ -401,7 +400,6 @@ function Dashboard({ onHome }) {
               fill={true}
               style={{
                 justifyContent: "flex-start",
-                color: activeTab === "Settings" ? "#fff" : "#8F99A8",
                 marginBottom: "4px",
               }}
             />
@@ -410,7 +408,7 @@ function Dashboard({ onHome }) {
 
         <div
           className="sidebar-footer"
-          style={{ borderTop: "1px solid #2D333A", paddingTop: "16px" }}
+          style={{ borderTop: "1px solid #252A31", paddingTop: "16px" }}
         >
           <Button
             className="bp5-minimal back-home-btn"
@@ -419,7 +417,7 @@ function Dashboard({ onHome }) {
             icon="log-out"
             alignText="left"
             fill={true}
-            style={{ justifyContent: "flex-start", color: "#8F99A8" }}
+            style={{ justifyContent: "flex-start", color: "#5F6B7C" }}
           />
         </div>
       </aside>
@@ -429,8 +427,12 @@ function Dashboard({ onHome }) {
         {/* Stats Cards Section */}
         <section className="rich-stats">
           <Card
-            elevation={Elevation.TWO}
-            style={{ backgroundColor: "#252A31", border: "1px solid #2D333A" }}
+            elevation={Elevation.ZERO}
+            style={{
+              backgroundColor: "#161A1D",
+              border: "1px solid #252A31",
+              boxShadow: "none",
+            }}
           >
             <p
               style={{
@@ -459,8 +461,12 @@ function Dashboard({ onHome }) {
             </p>
           </Card>
           <Card
-            elevation={Elevation.TWO}
-            style={{ backgroundColor: "#252A31", border: "1px solid #2D333A" }}
+            elevation={Elevation.ZERO}
+            style={{
+              backgroundColor: "#161A1D",
+              border: "1px solid #252A31",
+              boxShadow: "none",
+            }}
           >
             <p
               style={{
@@ -489,8 +495,12 @@ function Dashboard({ onHome }) {
             </p>
           </Card>
           <Card
-            elevation={Elevation.TWO}
-            style={{ backgroundColor: "#252A31", border: "1px solid #2D333A" }}
+            elevation={Elevation.ZERO}
+            style={{
+              backgroundColor: "#161A1D",
+              border: "1px solid #252A31",
+              boxShadow: "none",
+            }}
           >
             <p
               style={{
@@ -519,8 +529,12 @@ function Dashboard({ onHome }) {
             </p>
           </Card>
           <Card
-            elevation={Elevation.TWO}
-            style={{ backgroundColor: "#252A31", border: "1px solid #2D333A" }}
+            elevation={Elevation.ZERO}
+            style={{
+              backgroundColor: "#161A1D",
+              border: "1px solid #252A31",
+              boxShadow: "none",
+            }}
           >
             <p
               style={{
@@ -611,10 +625,21 @@ function Dashboard({ onHome }) {
                 )}
               </div>
 
-              <div className="risk-meter">
+              <div
+                className="risk-meter"
+                style={{ backgroundColor: "#252A31" }}
+              >
                 <div
-                  className={`risk-meter-bar ${prediction.label.toLowerCase()}`}
-                  style={{ width: `${prediction.score}%` }}
+                  className="risk-meter-bar"
+                  style={{
+                    width: `${prediction.score}%`,
+                    backgroundColor:
+                      prediction.score <= 30
+                        ? "#1C6E42"
+                        : prediction.score <= 80
+                          ? "#C87619"
+                          : "#AC2F33",
+                  }}
                 />
               </div>
 
