@@ -1,5 +1,11 @@
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import "plottable/plottable.css";
+import {
+  BreachTrendChart,
+  CasesByPriorityChart,
+  ResolutionTimeChart,
+} from "./StratumCharts";
 import React, { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -1054,206 +1060,150 @@ function Dashboard({ onHome }) {
 
         {/* ANALYTICS TAB */}
         {activeTab === "Analytics" && (
-          <section className="analytics-tab-container">
-            <div className="rich-grid">
-              {/* Risk Distribution Bar Chart */}
-              <div className="rich-panel">
-                <p className="eyebrow">Risk levels</p>
-                <h2>Breach Risk Distribution</h2>
+          <div
+            style={{
+              padding: "24px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px",
+            }}
+          >
+            {/* Page header */}
+            <div>
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "#5F6B7C",
+                  letterSpacing: "0.8px",
+                  textTransform: "uppercase",
+                  marginBottom: "6px",
+                }}
+              >
+                ANALYTICS
+              </p>
+              <h1
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 600,
+                  color: "#F6F7F9",
+                  margin: 0,
+                  letterSpacing: "-0.3px",
+                }}
+              >
+                Queue Intelligence
+              </h1>
+              <p
+                style={{ fontSize: "13px", color: "#8F99A8", marginTop: "6px" }}
+              >
+                Pattern analysis across all active and resolved cases.
+              </p>
+            </div>
 
-                <div className="analytics-chart-container">
-                  {/* SVG Bar Chart */}
-                  <svg viewBox="0 0 400 240" className="svg-bar-chart">
-                    {/* Grid Lines */}
-                    <line
-                      x1="40"
-                      y1="40"
-                      x2="380"
-                      y2="40"
-                      stroke="#eee"
-                      strokeDasharray="3"
-                    />
-                    <line
-                      x1="40"
-                      y1="90"
-                      x2="380"
-                      y2="90"
-                      stroke="#eee"
-                      strokeDasharray="3"
-                    />
-                    <line
-                      x1="40"
-                      y1="140"
-                      x2="380"
-                      y2="140"
-                      stroke="#eee"
-                      strokeDasharray="3"
-                    />
-                    <line x1="40" y1="190" x2="380" y2="190" stroke="#eee" />
-
-                    {/* Calculations for heights */}
-                    {(() => {
-                      const counts = {
-                        Low: scoredCases.filter((c) => c.risk === "Low").length,
-                        Medium: scoredCases.filter((c) => c.risk === "Medium")
-                          .length,
-                        High: scoredCases.filter((c) => c.risk === "High")
-                          .length,
-                        Critical: scoredCases.filter(
-                          (c) => c.risk === "Critical",
-                        ).length,
-                      };
-                      const maxVal = Math.max(
-                        1,
-                        counts.Low,
-                        counts.Medium,
-                        counts.High,
-                        counts.Critical,
-                      );
-                      const getBarHeight = (val) => (val / maxVal) * 140;
-
-                      return (
-                        <>
-                          {/* Bars: [x, height, val, label, color] */}
-                          {[
-                            {
-                              x: 60,
-                              val: counts.Low,
-                              label: "Low",
-                              color: "#1f8a65",
-                            },
-                            {
-                              x: 140,
-                              val: counts.Medium,
-                              label: "Medium",
-                              color: "#c08532",
-                            },
-                            {
-                              x: 220,
-                              val: counts.High,
-                              label: "High",
-                              color: "#f54e00",
-                            },
-                            {
-                              x: 300,
-                              val: counts.Critical,
-                              label: "Critical",
-                              color: "#cf2d56",
-                            },
-                          ].map((bar, i) => {
-                            const h = getBarHeight(bar.val);
-                            const y = 190 - h;
-                            return (
-                              <g key={i} className="bar-group">
-                                <rect
-                                  x={bar.x}
-                                  y={y}
-                                  width="40"
-                                  height={h}
-                                  fill={bar.color}
-                                  rx="4"
-                                  className="chart-rect"
-                                />
-                                {/* Label text */}
-                                <text
-                                  x={bar.x + 20}
-                                  y="210"
-                                  textAnchor="middle"
-                                  className="chart-axis-label"
-                                >
-                                  {bar.label}
-                                </text>
-                                {/* Value label */}
-                                <text
-                                  x={bar.x + 20}
-                                  y={y - 8}
-                                  textAnchor="middle"
-                                  className="chart-value-label"
-                                >
-                                  {bar.val}
-                                </text>
-                              </g>
-                            );
-                          })}
-                        </>
-                      );
-                    })()}
-                  </svg>
-                </div>
+            {/* Top row — two charts side by side */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "16px",
+              }}
+            >
+              {/* Chart 1 */}
+              <div
+                style={{
+                  backgroundColor: "#161A1D",
+                  border: "1px solid #252A31",
+                  padding: "20px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "11px",
+                    color: "#5F6B7C",
+                    letterSpacing: "0.8px",
+                    textTransform: "uppercase",
+                    marginBottom: "4px",
+                  }}
+                >
+                  SLA BREACH TREND
+                </p>
+                <p
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#F6F7F9",
+                    marginBottom: "16px",
+                  }}
+                >
+                  Risk score over time
+                </p>
+                <BreachTrendChart />
               </div>
 
-              {/* Performance Gauges */}
-              <div className="rich-panel">
-                <p className="eyebrow">SLA Health index</p>
-                <h2>Key Indicators</h2>
-
-                <div className="gauges-grid">
-                  <div className="gauge-card">
-                    <svg viewBox="0 0 100 100" className="radial-progress-svg">
-                      <circle cx="50" cy="50" r="40" className="radial-bg" />
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="40"
-                        className="radial-fill"
-                        style={{
-                          strokeDasharray: `${2 * Math.PI * 40}`,
-                          strokeDashoffset: `${2 * Math.PI * 40 * (1 - slaHealthIndex / 100)}`,
-                        }}
-                      />
-                      <text x="50" y="55" className="radial-text">
-                        {slaHealthIndex}%
-                      </text>
-                    </svg>
-                    <span>SLA Health Index</span>
-                    <small>Tickets in Low or Medium risk bounds</small>
-                  </div>
-
-                  <div className="gauge-card">
-                    {(() => {
-                      const avgBreachScore =
-                        scoredCases.length > 0
-                          ? Math.round(
-                              scoredCases.reduce((sum, c) => sum + c.score, 0) /
-                                scoredCases.length,
-                            )
-                          : 0;
-                      return (
-                        <>
-                          <svg
-                            viewBox="0 0 100 100"
-                            className="radial-progress-svg score-gauge"
-                          >
-                            <circle
-                              cx="50"
-                              cy="50"
-                              r="40"
-                              className="radial-bg"
-                            />
-                            <circle
-                              cx="50"
-                              cy="50"
-                              r="40"
-                              className="radial-fill"
-                              style={{
-                                strokeDasharray: `${2 * Math.PI * 40}`,
-                                strokeDashoffset: `${2 * Math.PI * 40 * (1 - avgBreachScore / 100)}`,
-                              }}
-                            />
-                            <text x="50" y="55" className="radial-text">
-                              {avgBreachScore}%
-                            </text>
-                          </svg>
-                          <span>Avg. Breach Score</span>
-                          <small>Average risk probability of the queue</small>
-                        </>
-                      );
-                    })()}
-                  </div>
-                </div>
+              {/* Chart 2 */}
+              <div
+                style={{
+                  backgroundColor: "#161A1D",
+                  border: "1px solid #252A31",
+                  padding: "20px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "11px",
+                    color: "#5F6B7C",
+                    letterSpacing: "0.8px",
+                    textTransform: "uppercase",
+                    marginBottom: "4px",
+                  }}
+                >
+                  CASE DISTRIBUTION
+                </p>
+                <p
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#F6F7F9",
+                    marginBottom: "16px",
+                  }}
+                >
+                  Open cases by priority
+                </p>
+                <CasesByPriorityChart />
               </div>
             </div>
-          </section>
+
+            {/* Bottom row — full width chart */}
+            <div
+              style={{
+                backgroundColor: "#161A1D",
+                border: "1px solid #252A31",
+                padding: "20px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "#5F6B7C",
+                  letterSpacing: "0.8px",
+                  textTransform: "uppercase",
+                  marginBottom: "4px",
+                }}
+              >
+                AGENT PERFORMANCE
+              </p>
+              <p
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#F6F7F9",
+                  marginBottom: "16px",
+                }}
+              >
+                Average resolution time by agent (minutes)
+              </p>
+              <ResolutionTimeChart />
+            </div>
+          </div>
         )}
 
         {/* SETTINGS TAB */}
